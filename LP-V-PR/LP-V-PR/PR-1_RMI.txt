@@ -1,0 +1,72 @@
+//Hello.java 
+
+import java.rmi.*;
+import java.rmi.server.*;
+
+public class Hello extends UnicastRemoteObject implements HelloInterface 
+{
+  private String message;
+
+  public Hello (String msg) throws RemoteException 
+  {
+    message = msg;
+  }
+
+  public String say() throws RemoteException 
+  {
+    return message;
+  }
+}
+
+//HelloClient.java
+
+import java.rmi.*;
+import java.io.*;
+
+public class HelloClient
+{
+  public static void main (String[] argv) 
+  {
+    try 
+    {
+      HelloInterface hello = (HelloInterface) Naming.lookup("//localhost/Hello");
+      System.out.println(hello.say());
+    }
+    catch (Exception e) 
+    {
+      System.out.println ("HelloClient exception: " + e);
+    }
+  }
+}
+
+//HelloInterface.java
+
+import java.rmi.*;
+
+public interface HelloInterface extends Remote 
+{
+  public String say() throws RemoteException;
+}
+
+//HelloServer.java
+
+import java.io.*;
+import java.rmi.*;
+
+public class HelloServer
+{
+  public static void main (String[] argv) 
+  {
+    try 
+    {
+      Hello robj = new Hello ("Hello, world!");
+      Naming.rebind ("Hello", robj);
+      System.out.println ("Hello Server is ready.");
+    } 
+    catch (Exception e) 
+    {
+      System.out.println ("Hello Server failed: " + e);
+    }
+  }
+}
+
