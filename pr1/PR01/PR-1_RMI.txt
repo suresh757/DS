@@ -1,0 +1,12 @@
+//step 1 : Compile all java files (javac *.java)
+
+//step 2 :Command to start rmi registry
+
+"C:\Program Files\Java\jdk-24\bin\rmiregistry.exe"
+
+
+//step 3 : run HelloServer
+
+
+//step 4 : run HelloClient
+
